@@ -7,6 +7,7 @@ import java.io.File;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -22,9 +23,14 @@ public class SampleTest {
 
 	@Test
 	public void simplePassingTest() {
-		System.out.println("Just a JUnit Test");
-		// With nothing here, this test should pass.
+		assertTrue("This should always pass", true);
 		// This is to make sure that everything is working, before we continue on.
+	}
+
+	@Test
+	public void simpleFailingTest() {
+		assertTrue("This should always fail", false);
+		// This is to make sure that failing tests will fail.
 	}
 	
 	@Test
@@ -45,8 +51,15 @@ public class SampleTest {
 		driver.findElementByClassName("gsfi").sendKeys("Selenium");
 		driver.findElementByName("btnK").click();
 		
-		// Assert that the first link is to the Selenium website:
-		assertEquals(driver.findElementsByTagName("cite").get(0).getText(), "https://www.seleniumhq.org/");
+		// Assert that at least one of the results is Selenium's home page:
+		boolean found = false;
+		for (WebElement element : driver.findElementsByTagName("cite")) {
+			if (element.getText().contains("https://www.seleniumhq.org/")) {
+				found = true;
+				break;
+			}
+		}
+		assertTrue("The Selenium homepage should be found.", found);
 		
 		// Close the driver when done.
 		driver.close();
