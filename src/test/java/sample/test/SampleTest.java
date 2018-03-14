@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import sample.page.GooglePage;
+
 public class SampleTest {
 
 	@Before
@@ -64,5 +66,42 @@ public class SampleTest {
 		// Close the driver when done.
 		driver.close();
 	}
+	
+	@Test
+	public void useReadableLocators() {
+		// This test goes through the same actions as the above test, but uses the Page Object.
+		
+		// Create the WebDriver object.  This is needed to send commands to the browser.
+		ChromeOptions options = new ChromeOptions();
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\jyarrington\\Code\\node_modules\\chromedriver\\lib\\chromedriver\\chromedriver.exe");
+		options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"));
+		ChromeDriver driver = new ChromeDriver(options);
+		
+		// Navigate to google's home page.
+		driver.get("http://www.google.com");
+		System.out.println("Chrome Driver Created!");
+		
+		// Create the Page Object
+		GooglePage google = new GooglePage(driver);
+		
+		// Perform a Search for "Selenium", using the PageObject
+		google.searchBar.sendKeys("Selenium");
+		google.searchButton.click();
+		
+		// Assert that at least one of the results is Selenium's home page:
+		boolean found = false;
+		for (WebElement element : google.searchResultURLs) {
+			if (element.getText().contains("https://www.seleniumhq.org/")) {
+				found = true;
+				break;
+			}
+		}
+		assertTrue("The Selenium homepage should be found.", found);
+		
+		// Close the driver when done.
+		driver.close();
+	}
+	
+	
 
 }
