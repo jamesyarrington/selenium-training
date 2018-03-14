@@ -21,11 +21,30 @@ public class GooglePage {
 	@FindBy(tagName = "cite")
 	public List<WebElement> searchResultURLs;
 	
+	String homepage = "http://www.google.com";
+	
 	
 	public GooglePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 		this.driver = driver;
 	}
 	
+	public void goToHomePage() {
+		driver.get(homepage);
+	}
+	
+	public void performSearch(String search) {
+		searchBar.sendKeys(search);
+		searchButton.click();
+	}
+	
+	public boolean resultsContain(String expectedURL) {
+		for (WebElement element : searchResultURLs) {
+			if (element.getText().contains(expectedURL)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

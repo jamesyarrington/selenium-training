@@ -47,7 +47,6 @@ public class SampleTest {
 		
 		// Navigate to google's home page.
 		driver.get("http://www.google.com");
-		System.out.println("Chrome Driver Created!");
 		
 		// Perform a Search for "Selenium"
 		driver.findElementByClassName("gsfi").sendKeys("Selenium");
@@ -79,7 +78,6 @@ public class SampleTest {
 		
 		// Navigate to google's home page.
 		driver.get("http://www.google.com");
-		System.out.println("Chrome Driver Created!");
 		
 		// Create the Page Object
 		GooglePage google = new GooglePage(driver);
@@ -97,6 +95,36 @@ public class SampleTest {
 			}
 		}
 		assertTrue("The Selenium homepage should be found.", found);
+		
+		// Close the driver when done.
+		driver.close();
+	}
+	
+	@Test
+	public void usePageObjectMethods() {
+		// By adding methods to the Page Object, you abstract even more
+		// of the element-finding logic from the test logic, making the
+		// tests even more readable.
+		
+		// Create the WebDriver object.  This is needed to send commands to the browser.
+		ChromeOptions options = new ChromeOptions();
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\jyarrington\\Code\\node_modules\\chromedriver\\lib\\chromedriver\\chromedriver.exe");
+		options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"));
+		ChromeDriver driver = new ChromeDriver(options);
+
+		// Create the Page Object
+		GooglePage google = new GooglePage(driver);
+		
+		// Navigate to google's home page.
+		google.goToHomePage();
+		
+		// Perform a Search for "Selenium", using the PageObject
+		google.performSearch("Selenium");
+		
+		// Assert that at least one of the results is Selenium's home page:
+		assertTrue("The Selenium homepage should be found.",
+				google.resultsContain("https://www.seleniumhq.org/")
+				);
 		
 		// Close the driver when done.
 		driver.close();
