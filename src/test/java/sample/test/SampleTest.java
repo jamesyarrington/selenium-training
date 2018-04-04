@@ -6,6 +6,7 @@ import java.io.File;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -29,13 +30,13 @@ public class SampleTest {
 		// This is to make sure that everything is working, before we continue on.
 	}
 
-	@Test
+	@Test @Ignore
 	public void simpleFailingTest() {
 		assertTrue("This should always fail", false);
 		// This is to make sure that failing tests will fail.
 	}
 	
-	@Test
+	@Test @Ignore
 	public void googleSearchSeleniumTest() {
 		// This test will go to www.google.com, and look for the google logo.
 		
@@ -66,7 +67,7 @@ public class SampleTest {
 		driver.close();
 	}
 	
-	@Test
+	@Test @Ignore
 	public void useReadableLocators() {
 		// This test goes through the same actions as the above test, but uses the Page Object.
 		
@@ -100,7 +101,7 @@ public class SampleTest {
 		driver.close();
 	}
 	
-	@Test
+	@Test @Ignore
 	public void usePageObjectMethods() {
 		// By adding methods to the Page Object, you abstract even more
 		// of the element-finding logic from the test logic, making the
@@ -129,7 +130,4 @@ public class SampleTest {
 		// Close the driver when done.
 		driver.close();
 	}
-	
-	
-
 }
